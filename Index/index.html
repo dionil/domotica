@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Casa Inteligente</title>
+  
+  <script src="js/external/jquery/jquery.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/script.js"></script>
+
+  <link href="css/jquery-ui.css" rel="stylesheet">
+  <link href="css/estilo.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Control</a></li>
+    <li><a href="#tabs-2">Luces</a></li>
+    <li><a href="#tabs-3">Tomacorrientes</a></li>
+    <li><a href="#tabs-4">Consumo</a></li>
+  </ul>
+
+
+ <div id="tabs-1"><a href="ControlCasa/Control.html"><img src="img/Control.png"></a></div>
+
+  <div id="tabs-2">
+  <ol id="selectable">
+  <li class="ui-widget-content">Habitacion Principal</li>
+  <li class="ui-widget-content">Habitacion Secundaria</li>
+  <li class="ui-widget-content">Baño</li>
+  <li class="ui-widget-content">Pasillo</li>
+  <li class="ui-widget-content">Comedor</li>
+  <li class="ui-widget-content">Sala</li>
+  <li class="ui-widget-content">Cocina</li>
+  <li class="ui-widget-content">Area de Lavado</li>
+</ol>
+ <p id="feedback">
+<span>You've selected:</span> <span id="select-result">none</span>.
+</p>
+   
+
+  <table id="customers">
+  <tr>
+    <th>Consumo Actual</th>
+    <th>Costo</th>
+    <th>Tiempo Encendido</th>
+    <th>Estado</th>
+  </tr>
+  <tr>
+    <td>15 Kwh</td>
+    <td>255 pesos</td>
+    <td>10 minutos</td>
+    <td>Energizada</td>
+  </tr>
+  
+ 
+</table>
+
+
+  </div>
+  <div id="tabs-3">
+  <div id="accordion-resizer" class="ui-widget-content">
+    <div id="accordion">
+    <h3>Habitacion Principal</h3>
+      <div>
+
+      <table >
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+
+  </tr>
+  <tr>
+    <td>Peter</td>
+    <td>Griffin</td>
+  </tr>
+  <tr>
+    <td>Lois</td>
+    <td>Griffin</td>
+  </tr>
+  </table>
+
+      </div>
+
+    <h3>Habitacion Secundaria</h3>
+      <div><p>Sed non urna</p></div>
+
+    <h3>Pasillo</h3>
+      <div><p></p></div>
+
+    <h3>Baño</h3>
+      <div><p>Cras dictum</p></div>
+
+    </div>
+</div>
+ </div>
+
+  <div id="tabs-4">
+    <p></p>
+  </div>
+
+</div>
+ 
+ 
+</body>
+</html>
+
+

@@ -1,0 +1,354 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="css/dhive/jquery-ui.min.css" id="jqui_theme"/>
+    <link rel="stylesheet" href="css/backgrounds.css" type="text/css"/>
+    <link rel="stylesheet" href="css/hqWidgets.css" type="text/css"/>
+    <link rel="stylesheet" href="css/hqUtils.css" type="text/css"/>
+    <link rel="stylesheet" href="css/estilo.css"      type="text/css">
+    <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.min.css">
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/hqUtils.js"></script>
+    <script type="text/javascript" src="js/hqWidgets.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript"  src="js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript"  src="js/jquery-ui/jquery-ui.min.js"></script>
+
+
+<script type="text/javascript">
+
+
+// Default body stle
+var gBodyStyle = "hq-background-h-gradient-gray-0";
+
+
+// Simulated image list. Normally this list must return server via some request
+var aImages = new Array(
+		"flat.png",
+		"kde_folder.png",
+		"blind.png",
+		"DoorOpenedIcon.png",
+		"Lamp.png",
+		"Temperature.png",
+		"locked.png",
+		"LockOpened.png",
+		"LockOrange.png",
+		"unlocked.png");
+        
+// Request by server the image list in the pictures directory
+function GetPicturesList (callback, param) {
+	// callback (list)
+	if (callback)
+		callback (aImages, param);
+}
+</script>
+
+</head>
+<body>	
+	<div id='status'  data-desc="Debug messages" style='z-index:1050; position:absolute; top: 100px; left: 100px; color:white'></div>
+	<div id='statusM' data-desc="Debug messages" style='z-index:1050; position:absolute; top: 50px;  left: 100px; color:white'></div>	
+
+	<input type="button"  id="corriente" class="offCorriente">
+
+	<input type="button"  id="corriente1" class="offCorriente1">
+
+	<input type="button"  id="corriente2" class="offCorriente2">
+
+	<input type="button"  id="corriente3" class="offCorriente3">
+
+	<input type="button"  id="corriente4" class="offCorriente4">
+
+	<div id="ventilacionH1"></div>
+	<div id ="ventilacionH1Valores">
+	<span id="hb1ven"><font color="white" >Ventilacion: <span id="valorVentilacionH1">0%</span></font></span><br>
+	<div id="barraVentilacionH1"></div>
+
+    <div id="ventilacionH2"></div>
+	<div id ="ventilacionH2Valores">
+	<span id="hb2ven"><font color="white" >Ventilacion:<span id="valorVentilacionH2">0%</span></font></span><br>
+	<div id="barraVentilacionH2"></div>
+							
+</body>
+
+<script type="text/javascript">
+    // Apply current body style
+    $('body').addClass(gBodyStyle);
+    
+    function onTimeoutChange (p) {
+        p.SetState ( p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+        setTimeout (function (elem) {onTimeoutChange (elem);}, 5000, p);
+    }
+    
+    // Init hqWidgets framework
+    hqWidgets.Init ({gGetFiles: GetPicturesList});
+    var isCtxMenu = true;
+
+    // ---------------- Create buttons --------------------------
+    // Create background image
+	var bg = hqWidgets.Create ({isContextMenu: isCtxMenu, x:10,  y: 60,                                          buttonType: hqWidgets.gButtonType.gTypeImage,    iconName:'flat.png', zindex: -2});
+	// create dimmer 1
+    var b0 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:100, y:500, room: hqWidgets.Translate("Habitacion Principal"),     buttonType: hqWidgets.gButtonType.gTypeDimmer,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});//, 'original/motion.png');
+	// create dimmer 2
+    var b01= hqWidgets.Create ({isContextMenu: isCtxMenu, x:300, y:465, room: hqWidgets.Translate("Habitacion"),    buttonType: hqWidgets.gButtonType.gTypeDimmer,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	var L0 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:280, y:700, room: hqWidgets.Translate("Pasillo"),     buttonType: hqWidgets.gButtonType,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	var L1 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:440, y:550, room: hqWidgets.Translate("Bano"),     buttonType: hqWidgets.gButtonType,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	var L2 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:660, y:650, room: hqWidgets.Translate("Comedor"),     buttonType: hqWidgets.gButtonType,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	var L3 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:655, y:480, room: hqWidgets.Translate("Sala"),     buttonType: hqWidgets.gButtonType,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	var L4 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:740, y:400, room: hqWidgets.Translate("Cocina"),     buttonType: hqWidgets.gButtonType,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	var L5 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:740, y:250, room: hqWidgets.Translate("Lavado"),     buttonType: hqWidgets.gButtonType,   iconName: 'Lamp.png', position: 100, hoursLastAction:-1});
+	// create inside temperature (with valve state)
+    var b1 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:740,  y:580, room: hqWidgets.Translate("Termometro"),buttonType: hqWidgets.gButtonType.gTypeInTemp, iconName: 'Temperature.png'});//, 'original/motion.png');
+	var b2 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:450,  y:350,  room: hqWidgets.Translate("Calentador"),     buttonType: hqWidgets.gButtonType.gTypeOutTemp,  iconName: 'Temperature.png'});
+
+	var b3 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:140, y:70,  room: hqWidgets.Translate("Wohzimmer"),  iconName: 'Lamp.png', radius: 5, title: "Test", infoTextCss: {color: 'white'}});
+
+    var b4 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:800, y:400,  room: hqWidgets.Translate("Gabinete Triple"),  buttonType: hqWidgets.gButtonType.gTypeBlind});
+	var b5 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:800, y:450,  room: hqWidgets.Translate("Gabinete Sencillo"),  buttonType: hqWidgets.gButtonType.gTypeBlind});
+	var b6 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:815, y:695, room: hqWidgets.Translate("Puerta"),  buttonType: hqWidgets.gButtonType.gTypeDoor, width: 50, height:100, border:2, doorType: hqWidgets.gSwingType.gSwingRight});
+	var b7 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:805, y:685, room: hqWidgets.Translate("Cerradura"),         buttonType: hqWidgets.gButtonType.gTypeLock, width: 30, height:30, _noBackground: true, iconName: 'unlocked.png', doorType: hqWidgets.gSwingType.gSwingRight});
+
+	var b8 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:480, y:10, room: hqWidgets.Translate("Text"),         buttonType: hqWidgets.gButtonType.gTypeText, text: "Click Para Cambiar Iconos"});
+	// Create ip cam widget
+    var b9 = hqWidgets.Create ({isContextMenu: isCtxMenu, x:760, y:120, room: hqWidgets.Translate("KZ"),         buttonType: hqWidgets.gButtonType.gTypeGong,  /*radius:2,width:100, height:60,  */ipCamImageURL: 'http://blog-imgs-55-origin.fc2.com/k/i/t/kitchencounterdesign/House-Photo-2.jpg', popUpDelay: 10000, gongQuestionImg: 'DoorOpen.png', gongActionBtn: true, ipCamActionBtn: true, title: 'KZ Camera', iconName: 'ringing-bell.png', gongMelody: 'BienvenidoDionil.mp3'});
+    var b10 =hqWidgets.Create ({isContextMenu: isCtxMenu, x:760,  y:80, room: hqWidgets.Translate("KZ"),         buttonType: hqWidgets.gButtonType.gTypeCam,  radius:2,width:100, height:60, ipCamImageURL: 'http://blog-imgs-55-origin.fc2.com/k/i/t/kitchencounterdesign/House-Photo-2.jpg', popUpDelay: 10000, /*gongActionBtn: true, ipCamActionBtn: true,*/ title: 'Camara'});
+
+    onTimeoutChange(b3);
+        
+    setTimeout (function (a) { a.SetStates({state: hqWidgets.gState.gStateOn});}, 1000, b9);
+    setTimeout (function (a) { a.SetStates({state: hqWidgets.gState.gStateOff});}, 15000, b9);
+    setTimeout (function (a) { a.SetStates({state: hqWidgets.gState.gStateOn});}, 3000, b6);
+    var editMode = hqWidgets.Create ({isContextMenu: isCtxMenu, x:400, y:0, title:hqWidgets.Translate("Edit mode"), divName: "edit_mode"});
+	
+    // Simulate dynamic changes
+	
+    b0.SetStates ({action: function (p, op, value){
+       if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+            console.log (p.settings.room + ": new status - " + p.dynStates.state);
+        }
+        else
+            {console.log ("la" + value);
+        	b0.SetStates ({percentState: value});
+    		}
+    }});
+
+    b01.SetStates ({
+
+    	action: function (p, op, value){
+       if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+
+            console.log (p.settings.room + ":Valor=  " + p.dynStates.state);
+        }
+        else
+            {console.log ("lb" + value);
+        	b01.SetStates ({percentState: value});
+            if(value>0) { console.log("on");  p.dynStates.state=hqWidgets.gState.gStateOn; }
+            if(value==0){ console.log("off"); p.dynStates.state=hqWidgets.gState.gStateOff;}
+
+    		}
+    }});
+
+
+    L0.SetStates ({
+    	action: function (p, op, value){
+    if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+            console.log (p.settings.room + ": new status - " + p.dynStates.state);
+        }
+
+    if(p.dynStates.state==2){console.log("apagar oficina"); serial.write("apagar oficina\r\n");}
+    if(p.dynStates.state==1)
+        {console.log("encender oficina"); serial.write("encender oficina\r\n");}
+    
+    }});
+
+       L1.SetStates ({action: function (p, op, value){
+       if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+
+        if(p.dynStates.state==2){console.log("apagar bano"); serial.write("apagar bano\r\n");}
+        if(p.dynStates.state==1){console.log("encender bano"); serial.write("encender bano\r\n");}    
+        }
+        
+    }});
+
+ 	L2.SetStates ({action: function (p, op, value){
+        if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+
+        if(p.dynStates.state==2){console.log("apagar comedor"); serial.write("apagar comedor\r\n");}
+        if(p.dynStates.state==1){console.log("encender comedor"); serial.write("encender comedor\r\n");}    
+        }
+       
+    }});
+
+ 	L3.SetStates ({action: function (p, op, value){
+        if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+
+        if(p.dynStates.state==2){console.log("apagar sala"); serial.write("apagar sala\r\n");}
+        if(p.dynStates.state==1){console.log("encender sala"); serial.write("encender sala\r\n");}
+        }
+        
+    }});
+
+ 	L4.SetStates ({action: function (p, op, value){
+        if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+         if(p.dynStates.state==2){console.log("apagar cocina"); serial.write("apagar cocina\r\n");}
+        if(p.dynStates.state==1){console.log("encender cocina"); serial.write("encender cocina\r\n");}
+        }
+        
+    }});
+
+ 	L5.SetStates ({action: function (p, op, value){
+        if (op != "pos") {
+            p.SetState (p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);
+
+        if(p.dynStates.state==2){console.log("apagar lavado"); serial.write("apagar lavado\r\n");}
+        if(p.dynStates.state==1){console.log("encender lavado"); serial.write("encender lavado\r\n");}
+        }
+   
+    }});
+
+
+
+
+    b1.SetStates ({action: function (p, op, value){
+        console.log (p.settings.room + ": new "+op+" - " + value);
+    }});
+    b7.SetStates ({action: function (p, op, value) {
+        console.log (p.settings.room + ": new status - " + value);
+    }});
+	b1.SetStates ({temperature: 5, setTemp: 10, humidity: 55, valve: 12});
+	b2.SetStates ({temperature: 5, setTemp: 10, humidity: 55, valve: 12});
+	b3.SetStates ({infoText: "130"});
+	b4.SetStates ({action: function (p, op, value) {
+        p.SetStates ({state: hqWidgets.gState.gStateOff, isWorking: true});
+        p.SetWindowState (0, hqWidgets.gWindowState.gWindowToggle);
+        p.SetWindowState (1, hqWidgets.gWindowState.gWindowToggle);
+        p.SetWindowState (2, hqWidgets.gWindowState.gWindowToggle);
+        console.log (p.settings.room + ": new value - " + value + "%");
+        p.SetStates({percentState: value});
+    }});
+	b5.SetStates ({action: function (p, op, value) {
+        p.SetStates ({state: hqWidgets.gState.gStateOff, isRefresh: true});
+        p.SetWindowState (0, hqWidgets.gWindowState.gWindowToggle);
+        p.SetWindowState (1, hqWidgets.gWindowState.gWindowToggle);
+        console.log (p.settings.room + ": new value - " + value + "%");
+    }});	
+    b4.SetSettings ({width: 140, height: 70, windowConfig: hqWidgets.gSwingType.gSwingLeft+","+hqWidgets.gSwingType.gSwingLeft+","+hqWidgets.gSwingType.gSwingRight});
+    b4.SetStates ({handleState: "1,2,3"});
+    //b4.SetStates ({windowState: "2,2"});
+//	b6.SetState(hqWidgets.gState.gStateOn);
+    b4.SetStates ({lowBattery: true});
+    b4.SetStates ({lowBattery: false});
+    b4.SetStates ({lowBattery: true});
+    b3.SetStates ({isStrengthShow: true, strength: -64});
+    
+    b9.SetStates({action: function (p, op, value) {
+        if (op == "state")
+            console.log (p.settings.title + ": play gong");
+        if (op == "open")
+            console.log (p.settings.title + ": open door");
+    }});	
+	
+	setTimeout (function () {b4.SetStates ({percentState: 80})}, 1000);
+	setTimeout (function () {b0.SetStates ({percentState: 50})}, 1000);
+	
+	b3.SetStates ({action: function (p){p.SetRefresh(true); p.SetState ( p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);}});
+	b2.SetStates ({action: function (p){p.SetRefresh(true); p.SetState ( p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);}});
+	//b4.SetStates ({action: function (p){p.SetState ( p.dynStates.state == hqWidgets.gState.gStateOff ? hqWidgets.gState.gStateOn : hqWidgets.gState.gStateOff);}});
+	b2.SetStates({state: hqWidgets.gState.gStateOff});
+	b1.SetStates({state: hqWidgets.gState.gStateOff});
+	
+    editMode.settings.isIgnoreEditMode=true;
+    editMode.SetTitle ("", "Switch edit mode on/off");
+    editMode.dynStates.action = function (p) { if (hqWidgets.SetEditMode()) p.SetState (hqWidgets.gState.gStateOn); else p.SetState (hqWidgets.gState.gStateOff);  };
+    editMode.SetStates({state: hqWidgets.gState.gStateOff});
+    
+     
+    var first = hqStyleSelector.init ({ width: 150,
+                            style: "menuElementHeader",     
+                            styles: {"Style": "hq-button-base-normal",
+                                     "AAA":      "hq-button-base-normal-hover",
+                                     "Menu":  "menuElementHeader",
+                                    }
+                          });
+                          
+    hqStyleSelector.init ({ width: 200,
+                            style: hqWidgets.gDynamics.gBodyStyle,     
+                            styles: {
+							"Blue marine lines": "hq-background-blue-marine-lines",
+							"Blue marine": "hq-background-blue-marine",
+							"Blue flowers": "hq-background-blue-flowers",
+							"Blue radial": "hq-background-radial-blue",
+							"Black hor. gradient 0": "hq-background-h-gradient-black-0",
+							"Black hor. gradient 1": "hq-background-h-gradient-black-1",
+							"Black hor. gradient 2": "hq-background-h-gradient-black-2",
+							"Black hor. gradient 3": "hq-background-h-gradient-black-3",
+							"Black hor. gradient 4": "hq-background-h-gradient-black-4",
+							"Black hor. gradient 5": "hq-background-h-gradient-black-5",
+							"Orange hor. gradient 0": "hq-background-h-gradient-orange-0",
+							"Orange hor. gradient 1": "hq-background-h-gradient-orange-1",
+							"Orange hor. gradient 2": "hq-background-h-gradient-orange-2",
+							"Orange hor. gradient 3": "hq-background-h-gradient-orange-3",
+							"Blue hor. gradient 0": "hq-background-h-gradient-blue-0",
+							"Blue hor. gradient 1": "hq-background-h-gradient-blue-1",
+							"Blue hor. gradient 2": "hq-background-h-gradient-blue-2",
+							"Blue hor. gradient 3": "hq-background-h-gradient-blue-3",
+							"Blue hor. gradient 4": "hq-background-h-gradient-blue-4",
+							"Blue hor. gradient 5": "hq-background-h-gradient-blue-5",
+							"Blue hor. gradient 6": "hq-background-h-gradient-blue-6",
+							"Blue hor. gradient 7": "hq-background-h-gradient-blue-7",
+							"Yellow hor. gradient 0": "hq-background-h-gradient-yellow-0",
+							"Yellow hor. gradient 1": "hq-background-h-gradient-yellow-1",
+							"Yellow hor. gradient 2": "hq-background-h-gradient-yellow-2",
+							"Yellow hor. gradient 3": "hq-background-h-gradient-yellow-3",
+							"Green hor. gradient 0": "hq-background-h-gradient-green-0",
+							"Green hor. gradient 1": "hq-background-h-gradient-green-1",
+							"Green hor. gradient 2": "hq-background-h-gradient-green-2",
+							"Green hor. gradient 3": "hq-background-h-gradient-green-3",
+							"Green hor. gradient 4": "hq-background-h-gradient-green-4",
+							"Gray flat 0": "hq-background-gray-0",
+							"Gray flat 1": "hq-background-gray-1",
+							"Gray hor. gradient 0": "hq-background-h-gradient-gray-0",
+							"Gray hor. gradient 1": "hq-background-h-gradient-gray-1",
+							"Gray hor. gradient 2": "hq-background-h-gradient-gray-2",
+							"Gray hor. gradient 3": "hq-background-h-gradient-gray-3",
+							"Gray hor. gradient 4": "hq-background-h-gradient-gray-4",
+							"Gray hor. gradient 5": "hq-background-h-gradient-gray-5",
+							"Gray hor. gradient 6": "hq-background-h-gradient-gray-6",
+							"Gray graident": "hq-background-gradient-box",
+                            },
+							onchange: function (newStyle, obj) {
+								$('body').removeClass(gBodyStyle);
+								gBodyStyle = newStyle;
+								$('body').addClass(gBodyStyle);
+							},
+                          });
+
+	hqStyleSelector.destroy (first);
+	//  title
+	//  titleIcon
+	//  isClose - isCloseButton
+	//  content
+	//  isYes
+	//  isNo
+	//  isOk
+	//  positionX: center, left, right
+	//  positionY: middle, top, bottom
+	//  x
+	//  y
+	//  width
+	//  height
+	//  modal
+	//  timeout
+	//var d = new hqUtils.Dialog ({title: "Test window", positionX: 'center', positionY: 'middle', height: 200, modal: true, timeout: 5000});
+
+	//SetEditMode (true);
+
+</script>
+</html>

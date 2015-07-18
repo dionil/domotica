@@ -1,0 +1,136 @@
+body{
+	color: white;
+	font: 20px arial, sans-serif;
+}
+
+		
+#ventilacionH1 {
+	position: absolute;
+	left: 25px;
+	top:330px;
+	width: 50px;
+	height: 50px;
+    border-radius: 8px;
+	background:url("img/AC.jpg");
+}
+
+#ventilacionH1Valores{
+position: absolute;
+	left: 80px;
+	top:330px;
+}
+
+ #barraVentilacionH1{
+ 	position: absolute;
+	left: 10px;
+	top:30px;
+ 	width: 110px;
+	border-radius: 0px;
+}
+		
+#ventilacionH2 {
+	position: absolute;
+	left: 150px;
+	top:0px;
+	width: 50px;
+	height: 50px;
+    border-radius: 8px;
+	background:url("img/AC.jpg");
+}
+
+#ventilacionH2Valores{
+	position: absolute;
+	left: 205px;
+	top:0px;
+ 	
+ }
+
+ #barraVentilacionH2{
+ 	position: absolute;
+	left: 20px;
+	top:30px;
+ 	width: 110px;
+	border-radius: 0px;
+}
+
+
+#corriente{
+	position: absolute;
+	top:700;
+	left:40;
+	width: 43px;
+	height: 43px;
+    border-radius: 20px;
+ }
+
+#corriente.onCorriente {
+	background:url("img/TomaCorrienteOn.png");
+}
+#corriente.offCorriente {
+	background:url("img/TomaCorrienteOff.png");
+}
+
+#corriente1{
+	position: absolute;
+	top:590;
+	left:370;
+	width: 43px;
+	height: 43px;
+    border-radius: 20px;
+ }
+
+#corriente1.onCorriente1 {
+	background:url("img/TomaCorrienteOn.png");
+}
+#corriente1.offCorriente1 {
+	background:url("img/TomaCorrienteOff.png");
+}
+
+#corriente2{
+	position: absolute;
+	top:755;
+	left:665;
+	width: 43px;
+	height: 43px;
+    border-radius: 20px;
+ }
+
+#corriente2.onCorriente2 {
+	background:url("img/TomaCorrienteOn.png");
+}
+#corriente2.offCorriente2 {
+	background:url("img/TomaCorrienteOff.png");
+}
+
+#corriente3{
+	position: absolute;
+	top:330;
+	left:550;
+	width: 43px;
+	height: 43px;
+    border-radius: 20px;
+ }
+
+#corriente3.onCorriente3 {
+	background:url("img/TomaCorrienteOn.png");
+}
+#corriente3.offCorriente3 {
+	background:url("img/TomaCorrienteOff.png");
+}
+
+#corriente4{
+	position: absolute;
+	top:750;
+	left:440;
+	width: 43px;
+	height: 43px;
+    border-radius: 20px;
+ }
+
+#corriente4.onCorriente4 {
+	background:url("img/TomaCorrienteOn.png");
+}
+#corriente4.offCorriente4 {
+	background:url("img/TomaCorrienteOff.png");
+}		
+		

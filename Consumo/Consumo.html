@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Contador</title>
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/webiopi.js"></script>
+		<script src="js/Chart.js"></script>
+		<script src="js/highstock.js"></script>
+		<script src="js/exporting.js"></script>
+		<script src="js/script.js"></script>
+		<script src="js/variables.js"></script>
+		<script src="js/ConsumoAct.js"></script>
+		<script src="js/webiopiServer.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+	</head>
+	<body>
+
+	<table id="TablaGraficos" >
+  	<tr>
+
+    	<th>
+			<div>
+				Consumo por Hora
+				<canvas id="PorHora" height="250" width="400"></canvas>
+			</div>
+		</th>
+
+    	<th>
+    		Consumo por Dia
+			<div><canvas id="PorDia" height="250" width="400"></canvas></div>
+    	</th>
+
+    	<th>
+    		Consumo por Mes
+			<div><canvas id="PorMes" height="250" width="400"></canvas></div>
+    	</th>
+
+    </tr>
+
+    <tr>
+    	
+    	<th><div id="ValorActual" style="height: 400px; min-width: 310px"></div></th>
+    	<th>
+    		<div><canvas id="Actual" height="250" width="400"></canvas></div>
+    		<span id="hora">
+        </th>
+
+    	<th>
+ 			<table id="TablaDatos" background-color: green;>
+           		<tr class="alt">
+           			<td>Consumo</td>
+           			<td>10 kWh</td>
+           		</tr>	
+           		<tr>
+           			<td>Tiempo</td>
+           			<td>15 horas</td>
+           		</tr>
+           		<tr class="alt">
+           			<td>Valance</td>
+           			<td>500 pesos</td>
+           		</tr>
+
+           		<tr>
+           			<td>Consumo Promedio</td>
+           			<td>15 kWh</td>
+           		</tr>
+
+
+           		<tr class="alt">
+           			<td>Consumo Maximo</td>
+           			<td>30 kWh</td>
+           		</tr>
+           		 
+
+           		<tr>
+           			<td>sensor0</td>
+           			<td><div><span id="sensor0"></span></div></td>
+           			
+           		</tr>
+
+
+           		<tr class="alt">
+           			<td>sensor1</td>
+           			<td><div><span id="sensor1"></span></div></td>
+           		</tr>
+
+           		<tr>
+           			<td>sensor2</td>
+           			<td><div><span id="sensor2"></span></div></td>
+           		</tr>
+
+           		<tr class="alt">
+           			<td>sensor3</td>
+           			<td><div><span id="sensor3"></span></div></td>
+           		</tr>
+
+           		<tr>
+           			<td>sensor4</td>
+           			<td><div><span id="sensor4"></span></div></td>
+           		</tr>
+
+return
+           </table>
+
+    	</th>
+
+    </tr>	
+	</table>
+	</body>
+</html>
